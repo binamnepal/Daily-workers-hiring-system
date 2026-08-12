@@ -1,190 +1,869 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: Arial, sans-serif; }
+/* =========================================================
+   HANDYPRO - COMPLETE HOME PAGE CSS
+   ========================================================= */
 
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #1a1a2e;
-    padding: 15px 40px;
-}
-.navbar .logo {
-    color: #fff;
-    font-size: 24px;
-    font-weight: bold;
-    text-decoration: none;
-}
-.navbar .nav-links {
-    list-style: none;
-    display: flex;
-    gap: 30px;
-}
-.navbar .nav-links a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-}
-.navbar .nav-links a:hover {
-    color: #f9a826;
-}
-.navbar .book-btn {
-    background-color: #f9a826;
-    color: #1a1a2e;
-    padding: 8px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-}
+/* ===== GENERAL RESET ===== */
 
-/* ===== General Reset ===== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    color: #1a1a2e;
-    background-color: #f7f7f5;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #16274f;
+    background-color: #f8f9fb;
     line-height: 1.6;
 }
 
-/* ===== Hero Section ===== */
+img {
+    display: block;
+    max-width: 100%;
+}
+
+button {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   HERO SECTION
+   ========================================================= */
+
 .hero {
-    background: linear-gradient(135deg, #0d1b3e, #16274f);
-    color: #ffffff;
+    min-height: 450px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     text-align: center;
-    padding: 80px 20px;
+
+    padding: 90px 25px;
+
+    color: #ffffff;
+
+    background:
+        radial-gradient(
+            circle at 85% 20%,
+            rgba(212, 175, 55, 0.18),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #0b1938,
+            #16274f
+        );
+}
+
+.hero-text {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .hero h1 {
-    font-size: 2.4rem;
-    margin-bottom: 12px;
-    font-weight: 700;
+    font-size: clamp(2.3rem, 5vw, 3.6rem);
+
+    line-height: 1.15;
+
+    font-weight: 750;
+
+    letter-spacing: -1px;
+
+    margin-bottom: 20px;
 }
 
 .hero p {
-    font-size: 1.1rem;
-    color: #d8d8e0;
-    margin-bottom: 28px;
+    max-width: 650px;
+
+    margin: 0 auto 34px;
+
+    font-size: 1.15rem;
+
+    line-height: 1.7;
+
+    color: #dfe5f2;
 }
+
+
+/* =========================================================
+   HERO BUTTONS
+   ========================================================= */
 
 .hero-actions {
     display: flex;
-    gap: 16px;
+
     justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+
     flex-wrap: wrap;
 }
 
 .hero button,
-.hero a.call-btn {
-    padding: 12px 28px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 6px;
-    border: none;
+.hero a.call-btn,
+.call-btn {
+    min-width: 145px;
+
+    padding: 13px 28px;
+
+    border-radius: 8px;
+
+    font-size: 0.98rem;
+    font-weight: 700;
+
     cursor: pointer;
+
     text-decoration: none;
-    display: inline-block;
-    transition: transform 0.15s ease, opacity 0.15s ease;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease,
+        color 0.25s ease;
 }
+
+
+/* Main Book Button */
 
 .hero button {
     background-color: #d4af37;
-    color: #16274f;
+
+    color: #102044;
+
+    border: 2px solid #d4af37;
+
+    box-shadow:
+        0 6px 18px rgba(212, 175, 55, 0.22);
 }
 
 .hero button:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+
+    background-color: #e1bd42;
+
+    box-shadow:
+        0 10px 25px rgba(212, 175, 55, 0.30);
 }
 
-.hero a.call-btn {
+
+/* Call Button */
+
+.hero .call-btn {
     background-color: transparent;
+
     color: #ffffff;
+
     border: 2px solid #d4af37;
 }
 
-.hero a.call-btn:hover {
+.hero .call-btn:hover {
+    transform: translateY(-3px);
+
     background-color: #d4af37;
-    color: #16274f;
+
+    color: #102044;
 }
 
-/* ===== Popular Services Section ===== */
-.services {
-    padding: 60px 20px;
-    text-align: center;
+
+/* =========================================================
+   ABOUT SECTION
+   ========================================================= */
+
+.about {
+    width: min(1180px, 92%);
+
+    margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: 0.9fr 1.1fr;
+
+    align-items: center;
+
+    gap: 70px;
+
+    padding: 95px 0;
 }
+
+
+/* =========================================================
+   ABOUT TEXT
+   ========================================================= */
+
+.about-text {
+    max-width: 570px;
+}
+
+.about-text h2 {
+    position: relative;
+
+    display: inline-block;
+
+    color: #16274f;
+
+    font-size: clamp(2rem, 4vw, 2.5rem);
+
+    line-height: 1.2;
+
+    margin-bottom: 24px;
+}
+
+
+/* Gold underline */
+
+.about-text h2::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: -10px;
+
+    width: 55px;
+
+    height: 4px;
+
+    background-color: #d4af37;
+
+    border-radius: 10px;
+}
+
+.about-text p {
+    color: #5b6475;
+
+    font-size: 1.02rem;
+
+    line-height: 1.8;
+
+    margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   ABOUT LIST
+   ========================================================= */
+
+.about-list {
+    list-style: none;
+
+    padding: 0;
+
+    margin: 0;
+}
+
+.about-list li {
+    position: relative;
+
+    padding: 14px 15px 14px 42px;
+
+    margin-bottom: 8px;
+
+    color: #24365f;
+
+    font-weight: 600;
+
+    border-bottom: 1px solid #e7e9ee;
+}
+
+
+/* Check icon */
+
+.about-list li::before {
+    content: "✓";
+
+    position: absolute;
+
+    left: 5px;
+    top: 10px;
+
+    width: 27px;
+    height: 27px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background-color: rgba(212, 175, 55, 0.15);
+
+    color: #b18c19;
+
+    border-radius: 50%;
+
+    font-size: 14px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   ABOUT IMAGE
+   ========================================================= */
+
+.about-image {
+    position: relative;
+
+    width: 100%;
+}
+
+
+/* Gold decorative shape behind image */
+
+.about-image::before {
+    content: "";
+
+    position: absolute;
+
+    width: 85%;
+    height: 85%;
+
+    right: -18px;
+    bottom: -18px;
+
+    background-color: #d4af37;
+
+    opacity: 0.18;
+
+    border-radius: 24px;
+
+    z-index: 0;
+}
+
+
+/* Main About Image */
+
+.about-image img {
+    position: relative;
+
+    z-index: 1;
+
+    width: 100%;
+
+    height: 430px;
+
+    object-fit: cover;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 20px 45px rgba(16, 32, 68, 0.15);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.about-image img:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 25px 50px rgba(16, 32, 68, 0.20);
+}
+
+
+/* =========================================================
+   SERVICES SECTION
+   ========================================================= */
+
+.services {
+    padding: 90px 20px 110px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f8f9fb 0%,
+            #f1f3f7 100%
+        );
+}
+
+
+/* Services Heading */
 
 .services h2 {
-    font-size: 1.8rem;
+    position: relative;
+
+    display: inline-block;
+
     color: #16274f;
-    margin-bottom: 32px;
+
+    font-size: clamp(2rem, 4vw, 2.5rem);
+
+    line-height: 1.2;
+
+    margin-bottom: 55px;
 }
+
+
+/* Gold underline */
+
+.services h2::after {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: -12px;
+
+    transform: translateX(-50%);
+
+    width: 55px;
+
+    height: 4px;
+
+    background-color: #d4af37;
+
+    border-radius: 10px;
+}
+
+
+/* =========================================================
+   SERVICES GRID
+   ========================================================= */
 
 .services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-    max-width: 900px;
+    width: min(1180px, 92%);
+
     margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 28px;
+
+    align-items: stretch;
 }
+
+
+/* =========================================================
+   SERVICE CARD
+   ========================================================= */
 
 .service-card {
+    display: flex;
+
+    flex-direction: column;
+
     background-color: #ffffff;
-    border: 1px solid #e2e2e8;
-    border-radius: 10px;
-    padding: 28px 16px;
-    font-weight: 600;
+
+    border: 1px solid #e5e8ee;
+
+    border-radius: 16px;
+
+    padding: 18px;
+
     color: #16274f;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+    box-shadow:
+        0 5px 18px rgba(15, 31, 66, 0.06);
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
 }
+
+
+/* Card Hover */
 
 .service-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    transform: translateY(-8px);
+
+    border-color: rgba(212, 175, 55, 0.45);
+
+    box-shadow:
+        0 18px 35px rgba(15, 31, 66, 0.12);
 }
 
-/* ===== Why Us Section ===== */
+
+/* =========================================================
+   SERVICE CARD IMAGE
+   ========================================================= */
+
+.service-card img {
+    width: 100%;
+
+    height: 210px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+
+    margin-bottom: 20px;
+
+    background-color: #eef1f5;
+}
+
+
+/* =========================================================
+   SERVICE CARD TITLE
+   ========================================================= */
+
+.service-card h3 {
+    color: #16274f;
+
+    font-size: 1.35rem;
+
+    font-weight: 750;
+
+    margin-bottom: 8px;
+}
+
+
+/* =========================================================
+   SERVICE CARD DESCRIPTION
+   ========================================================= */
+
+.service-card > p {
+    color: #687184;
+
+    font-size: 0.96rem;
+
+    line-height: 1.6;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   SEE MORE BUTTON
+   ========================================================= */
+
+.see-more-btn {
+    align-self: center;
+
+    margin-top: auto;
+
+    padding: 9px 20px;
+
+    background-color: transparent;
+
+    border: 1.5px solid #16274f;
+
+    border-radius: 7px;
+
+    color: #16274f;
+
+    font-size: 0.9rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.see-more-btn:hover {
+    background-color: #16274f;
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   SERVICE DETAILS
+   ========================================================= */
+
+.service-details {
+    display: none;
+
+    margin-top: 18px;
+
+    padding: 15px;
+
+    background-color: #f5f7fa;
+
+    border-radius: 9px;
+
+    text-align: left;
+}
+
+.service-details p {
+    color: #596276;
+
+    font-size: 0.87rem;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   WHY US SECTION
+   ========================================================= */
+
 .why-us {
-    background-color: #eef0f5;
-    padding: 60px 20px;
+    background-color: #eef1f6;
+
+    padding: 90px 20px;
+
     text-align: center;
 }
 
 .why-us h2 {
-    font-size: 1.8rem;
     color: #16274f;
-    margin-bottom: 32px;
+
+    font-size: 2rem;
+
+    margin-bottom: 40px;
 }
 
 .why-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-    max-width: 700px;
+    width: min(900px, 92%);
+
     margin: 0 auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
 }
 
 .why-grid div {
     background-color: #ffffff;
-    border-radius: 10px;
-    padding: 24px 16px;
-    font-weight: 500;
+
+    padding: 25px 18px;
+
+    border-radius: 12px;
+
     color: #16274f;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+
+    font-weight: 600;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.05);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
-/* ===== Responsive ===== */
+.why-grid div:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   TABLET RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    .about {
+        gap: 45px;
+    }
+
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    /* About becomes one column */
+
+    .about {
+        grid-template-columns: 1fr;
+
+        gap: 50px;
+
+        padding: 75px 0;
+    }
+
+    .about-text {
+        max-width: 100%;
+    }
+
+    .about-image {
+        max-width: 750px;
+
+        margin: 0 auto;
+    }
+
+    .about-image img {
+        height: 400px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 600px) {
+
+    /* ===== Hero ===== */
+
+    .hero {
+        min-height: 400px;
+
+        padding: 70px 20px;
+    }
+
     .hero h1 {
-        font-size: 1.8rem;
+        font-size: 2.15rem;
+
+        letter-spacing: -0.5px;
+    }
+
+    .hero p {
+        font-size: 1rem;
+
+        line-height: 1.6;
     }
 
     .hero-actions {
         flex-direction: column;
-        align-items: center;
+
+        width: 100%;
+    }
+
+    .hero button,
+    .hero .call-btn {
+        width: 100%;
+
+        max-width: 260px;
+    }
+
+
+    /* ===== About ===== */
+
+    .about {
+        width: 88%;
+
+        padding: 65px 0;
+
+        gap: 40px;
+    }
+
+    .about-text h2 {
+        font-size: 2rem;
+    }
+
+    .about-text p {
+        font-size: 0.95rem;
+
+        line-height: 1.75;
+    }
+
+    .about-list li {
+        font-size: 0.92rem;
+
+        padding-left: 40px;
+    }
+
+    .about-image img {
+        height: 300px;
+
+        border-radius: 16px;
+    }
+
+    .about-image::before {
+        right: -10px;
+
+        bottom: -10px;
+
+        border-radius: 18px;
+    }
+
+
+    /* ===== Services ===== */
+
+    .services {
+        padding: 70px 15px 80px;
+    }
+
+    .services h2 {
+        font-size: 2rem;
+
+        margin-bottom: 42px;
+    }
+
+    .services-grid {
+        width: 92%;
+
+        grid-template-columns: 1fr;
+
+        gap: 22px;
+    }
+
+    .service-card {
+        padding: 16px;
+    }
+
+    .service-card img {
+        height: 220px;
+    }
+
+
+    /* ===== Why Us ===== */
+
+    .why-us {
+        padding: 70px 15px;
+    }
+
+    .why-grid {
+        grid-template-columns: 1fr;
+
+        width: 90%;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    .hero {
+        padding: 60px 18px;
+    }
+
+    .hero h1 {
+        font-size: 1.9rem;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+    }
+
+    .about-image img {
+        height: 260px;
+    }
+
+    .service-card img {
+        height: 200px;
     }
 }
