@@ -1,42 +1,27 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block title %}Services{% endblock %}
+
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/catogories.css' %}">
 {% endblock %}
-{% block content %}
-<h2>Browse Services</h2>
-<div class="grid">
-    {% for category in categories %}
-    <div class="card">
-        <img src="{{ category.service_image }}">
-        <h3><a href="{% url 'categories:detail' category.slug %}">{{ category.name }}</a></h3>
-        <p class="muted">{{ category.description|default:"" }}</p>
-        <p>Starting at {{ category.base_price }}</p>
-    </div>
-    {% empty %}
-    <p>No service categories yet.</p>
-    {% endfor %}
-</div>
-{% endblock %}
-
-
-
-{%comment%}
-{% extends 'base.html' %}
-{% load static %}
 
 {% block content %}
+
 <section class="hero">
     <div class="hero-text">
         <h1>Find Trusted Handymen Near You</h1>
         <p>Book plumbers, electricians, and more in minutes.</p>
+
         <div class="hero-actions">
-            <button>Book a Service</button>
+            <a href="{% url 'categories:list' %}">
+                <button>Book a Service</button>
+            </a>
+
             <button class="call-btn">Call Us</button>
         </div>
     </div>
-    
 </section>
 
 <section class="about">
@@ -129,4 +114,3 @@ function toggleDetails(id) {
 }
 </script>
 {% endblock %}
-{%endcomment%}

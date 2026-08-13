@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
-
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
 {% block title %}About Us{% endblock %}
 
 {% block content %}
@@ -45,13 +48,18 @@
         </div>
         <div class="team-card">
             <img src="https://picsum.photos/id/1005/300/300" alt="Team member">
-            <h4>Alex Gurung</h4>
+            <h4>Swekshya Gurung</h4>
             <p>Plumbing Specialist</p>
         </div>
         <div class="team-card">
             <img src="https://picsum.photos/id/1012/300/300" alt="Team member">
             <h4>Binam Nepal</h4>
             <p>Appliance Repair</p>
+        </div>
+         <div class="team-card">
+            <img src="https://picsum.photos/id/1111/300/310" alt="Team member">
+            <h4>Aliza Parajuli</h4>
+            <p>Pet Care Pro Max</p>
         </div>
     </div>
 </div>

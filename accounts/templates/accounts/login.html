@@ -1,19 +1,61 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
 {% block title %}Login{% endblock %}
+
 {% block content %}
-<div class="card">
-    <h2>Login</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
-        {% for field in form %}
-        <p>
-            <label>{{ field.label }}</label>
-            {{ field }}
-            {{ field.errors }}
+
+<div class="login-page">
+
+    <div class="login-card">
+
+        <h2>Welcome Back</h2>
+
+        <p class="login-subtitle">
+            Login to your YOYO account
         </p>
-        {% endfor %}
-        <button type="submit">Log in</button>
-    </form>
+
+        <form method="post" class="login-form">
+
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            {% for field in form %}
+            <p>
+                <label for="{{ field.id_for_label }}">
+                    {{ field.label }}
+                </label>
+
+                {{ field }}
+
+                {{ field.errors }}
+            </p>
+            {% endfor %}
+
+            <button type="submit" class="login-submit">
+                Log In
+            </button>
+
+        </form>
+
+      <p class="login-footer">
+    Don't have an account?
+    <a href="{% url 'accounts:register_customer' %}">
+        Register as Customer
+    </a>
+    |
+    <a href="{% url 'accounts:register_worker' %}">
+        Register as Worker
+    </a>
+</p>
+
+    </div>
+
 </div>
+
 {% endblock %}

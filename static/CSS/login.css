@@ -1,0 +1,177 @@
+/* =========================
+   Login Page
+========================= */
+
+.login-page {
+    min-height: calc(100vh - 80px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+/* Login Card */
+
+.login-card {
+    width: 100%;
+    max-width: 430px;
+
+    background: #ffffff;
+
+    padding: 40px;
+
+    border-radius: 16px;
+
+    border: 1px solid #e5e7eb;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* Heading */
+
+.login-card h2 {
+    text-align: center;
+
+    font-size: 30px;
+
+    margin-bottom: 8px;
+
+    color: #111827;
+}
+
+.login-subtitle {
+    text-align: center;
+
+    color: #6b7280;
+
+    font-size: 15px;
+
+    margin-bottom: 30px;
+}
+
+/* Form */
+
+.login-form p {
+    margin-bottom: 20px;
+}
+
+.login-form label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #374151;
+}
+
+/* Input fields */
+
+.login-form input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 15px;
+
+    background: #fff;
+
+    transition: 0.2s ease;
+}
+
+.login-form input:focus {
+    border-color: #2563eb;
+
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Errors */
+
+.login-form ul.errorlist,
+.login-card .errorlist {
+    list-style: none;
+
+    padding: 0;
+
+    margin: 6px 0 0;
+
+    color: #dc2626;
+
+    font-size: 13px;
+}
+
+/* Login Button */
+
+.login-submit {
+    width: 100%;
+
+    border: none;
+
+    padding: 13px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.login-submit:hover {
+    background: #1d4ed8;
+
+    transform: translateY(-1px);
+}
+
+/* Bottom text */
+
+.login-footer {
+    text-align: center;
+
+    margin-top: 25px;
+
+    font-size: 14px;
+
+    color: #6b7280;
+}
+
+.login-footer a {
+    color: #2563eb;
+
+    text-decoration: none;
+
+    font-weight: 600;
+}
+
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile */
+
+@media (max-width: 500px) {
+    .login-card {
+        padding: 30px 22px;
+    }
+
+    .login-card h2 {
+        font-size: 26px;
+    }
+}

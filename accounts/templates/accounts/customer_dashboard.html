@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="card welcome-card">
+    <h2>Welcome, {{ user.username }}</h2>
+
+    <p class="muted">
+        Role: {{ user.role|title }} |
+        City: {{ user.city|default:"Not set" }}
+    </p>
+
+    <div class="actions">
+
+        <a class="btn" href="{% url 'categories:list' %}">
+            Browse Services
+        </a>
+
+        {% if user.role == "customer" %}
+        <a class="btn" href="{% url 'workers:search' %}">
+            Find a Worker
+        </a>
+        {% endif %}
+
+        <a class="btn secondary" href="{% url 'bookings:mine' %}">
+            My Bookings
+        </a>
+
+        <a class="btn secondary" href="{% url 'accounts:update_location' %}">
+            Update Location
+        </a>
+
+        {% if user.role == "worker" %}
+        <a class="btn secondary" href="{% url 'workers:my_profile' %}">
+            My Worker Profile
+        </a>
+        {% endif %}
+
+        <a class="btn secondary" href="{% url 'accounts:logout' %}">
+            Logout
+        </a>
+
+    </div>
+</div>
+
+<div class="stats">
+
+    <div class="stat-card stat-total">
+        <h3>Total Bookings</h3>
+        <p>{{ total_bookings|default:"0" }}</p>
+    </div>
+
+    <div class="stat-card stat-pending">
+        <h3>Pending</h3>
+        <p>{{ pending_bookings|default:"0" }}</p>
+    </div>
+
+    <div class="stat-card stat-completed">
+        <h3>Completed</h3>
+        <p>{{ completed_bookings|default:"0" }}</p>
+    </div>
+
+    <div class="stat-card stat-cancelled">
+        <h3>Cancelled</h3>
+        <p>{{ cancelled_bookings|default:"0" }}</p>
+    </div>
+
+</div>
+
+<div class="card">
+
+    <h3>Quick Actions</h3>
+
+    <div class="actions">
+
+        <a class="btn" href="{% url 'categories:list' %}">
+            View Categories
+        </a>
+
+        <a class="btn secondary" href="{% url 'bookings:mine' %}">
+            Booking History
+        </a>
+
+        <a class="btn secondary" href="{% url 'accounts:update_location' %}">
+            Change Location
+        </a>
+
+    </div>
+
+</div>
+
+<div class="card">
+
+    <h3>Recent Activity</h3>
+
+    <ul class="activity-log">
+
+        {% if recent_bookings %}
+
+            {% for booking in recent_bookings %}
+            <li>
+                <span class="activity-category">{{ booking.category }}</span>
+                <span class="activity-status status-{{ booking.status }}">{{ booking.get_status_display|default:booking.status }}</span>
+                <span class="activity-date">{{ booking.created_at|date:"M d, Y" }}</span>
+            </li>
+            {% endfor %}
+
+        {% else %}
+
+            <li class="empty-row">No recent activity.</li>
+
+        {% endif %}
+
+    </ul>
+
+</div>
+
+{% endblock %}

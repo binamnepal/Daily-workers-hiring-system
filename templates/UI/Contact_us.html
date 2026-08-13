@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+        <h1>Contact Us</h1>
+        <p>Have a question, a booking issue, or feedback? We're here to help.</p>
+    </div>
+</div>
+
+<div class="about-container">
+
+    <div class="contact-info-grid">
+        <div class="contact-info-card">
+            <div class="contact-icon">📍</div>
+            <h4>Our Office</h4>
+            <p>Putalisadak, Kathmandu, Nepal</p>
+        </div>
+        <div class="contact-info-card">
+            <div class="contact-icon">📞</div>
+            <h4>Call Us</h4>
+            <p><a href="tel:+9779800000000">+977 98-0000-0000</a></p>
+        </div>
+        <div class="contact-info-card">
+            <div class="contact-icon">✉️</div>
+            <h4>Email Us</h4>
+            <p><a href="mailto:support@yoyo.com">support@yoyo.com</a></p>
+        </div>
+        <div class="contact-info-card">
+            <div class="contact-icon">🕒</div>
+            <h4>Working Hours</h4>
+            <p>Sun – Fri, 9:00 AM – 7:00 PM</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Send us a message</h2>
+
+    <div class="contact-form-wrapper">
+        <form method="post" action="{% url 'categories:contact' %}" class="contact-form">
+            {% csrf_token %}
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" placeholder="98XXXXXXXX">
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject">
+                        <option value="general">General Inquiry</option>
+                        <option value="booking">Booking Issue</option>
+                        <option value="technician">Become a Technician</option>
+                        <option value="feedback">Feedback</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group form-group-full">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="6" placeholder="Tell us how we can help..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Send Message</button>
+        </form>
+    </div>
+
+    <h2 class="section-title">Find us here</h2>
+    <div class="map-wrapper">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.87!2d85.323!3d27.7052!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDQyJzE4LjciTiA4NcKwMTknMjIuOSJF!5e0!3m2!1sen!2snp!4v0000000000"
+            width="100%"
+            height="360"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+
+</div>
+{% endblock %}

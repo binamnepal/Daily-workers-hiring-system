@@ -1,0 +1,240 @@
+/* ==========================================================================
+   YOYO — Auth Forms (Signup / Login)
+   Shares brand tokens with dashboard.css / categories.css
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --yoyo-ink: #132436;
+    --yoyo-ink-light: #1e3a52;
+    --yoyo-paper: #f6f4ef;
+    --yoyo-panel: #ffffff;
+    --yoyo-amber: #f5a623;
+    --yoyo-amber-dark: #d68c0f;
+    --yoyo-danger: #c0392b;
+    --yoyo-danger-bg: #fbe9e7;
+    --yoyo-border: #dcd6c8;
+    --yoyo-text: #1c2b38;
+    --yoyo-text-muted: #5b6b78;
+    --yoyo-radius: 10px;
+    --yoyo-shadow-lg: 0 12px 32px rgba(19, 36, 54, 0.14);
+}
+
+body {
+    background: var(--yoyo-paper);
+    color: var(--yoyo-text);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+*:focus-visible {
+    outline: 3px solid var(--yoyo-amber);
+    outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Layout — center the form card on the page
+   ========================================================================== */
+
+#content,
+main {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+/* ==========================================================================
+   Form card
+   ========================================================================== */
+
+.card {
+    background: var(--yoyo-panel);
+    border: 1px solid var(--yoyo-border);
+    border-radius: var(--yoyo-radius);
+    box-shadow: var(--yoyo-shadow-lg);
+    padding: 40px 38px 34px;
+    width: 100%;
+    max-width: 420px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: var(--yoyo-amber);
+}
+
+.card h2 {
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--yoyo-ink);
+    margin: 0 0 26px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   Form fields
+   ========================================================================== */
+
+form p {
+    margin: 0 0 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+form label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--yoyo-text-muted);
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 0.95rem;
+    font-family: "Inter", sans-serif;
+    color: var(--yoyo-text);
+    background: var(--yoyo-paper);
+    border: 1.5px solid var(--yoyo-border);
+    border-radius: 7px;
+    transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+    box-sizing: border-box;
+}
+
+form input:hover,
+form select:hover,
+form textarea:hover {
+    border-color: #c7bfa9;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    outline: none;
+    border-color: var(--yoyo-amber);
+    background: var(--yoyo-panel);
+    box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.18);
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+form select {
+    cursor: pointer;
+}
+
+/* Checkbox / radio rows */
+form input[type="checkbox"],
+form input[type="radio"] {
+    width: auto;
+    accent-color: var(--yoyo-amber);
+}
+
+/* ==========================================================================
+   Errors
+   ========================================================================== */
+
+.errorlist {
+    list-style: none;
+    margin: 2px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.errorlist li {
+    background: var(--yoyo-danger-bg);
+    color: var(--yoyo-danger);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 7px 10px;
+    border-radius: 6px;
+    border-left: 3px solid var(--yoyo-danger);
+}
+
+form > .errorlist {
+    margin-bottom: 16px;
+}
+
+/* ==========================================================================
+   Submit button
+   ========================================================================== */
+
+form button[type="submit"] {
+    width: 100%;
+    margin-top: 6px;
+    padding: 13px 18px;
+    background: var(--yoyo-amber);
+    color: var(--yoyo-ink);
+    border: none;
+    border-radius: 7px;
+    font-family: "Oswald", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+form button[type="submit"]:hover {
+    background: var(--yoyo-amber-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(245, 166, 35, 0.3);
+}
+
+form button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================================
+   Footer link
+   ========================================================================== */
+
+.card .muted {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--yoyo-text-muted);
+    margin: 22px 0 0;
+}
+
+.card .muted a {
+    color: var(--yoyo-ink);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--yoyo-amber);
+}
+
+.card .muted a:hover {
+    color: var(--yoyo-amber-dark);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 480px) {
+    .card {
+        padding: 32px 24px 28px;
+        border-radius: 8px;
+    }
+}

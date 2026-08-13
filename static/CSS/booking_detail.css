@@ -1,0 +1,336 @@
+/* ==========================================================================
+   YOYO — Booking Detail ("Work Order")
+   Shares brand tokens with dashboard.css / auth.css
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
+:root {
+    --yoyo-ink: #132436;
+    --yoyo-ink-light: #1e3a52;
+    --yoyo-paper: #f6f4ef;
+    --yoyo-panel: #ffffff;
+    --yoyo-amber: #f5a623;
+    --yoyo-amber-dark: #d68c0f;
+    --yoyo-success: #1f8a4c;
+    --yoyo-danger: #c0392b;
+    --yoyo-danger-bg: #fbe9e7;
+    --yoyo-border: #dcd6c8;
+    --yoyo-text: #1c2b38;
+    --yoyo-text-muted: #5b6b78;
+    --yoyo-radius: 10px;
+    --yoyo-shadow: 0 2px 8px rgba(19, 36, 54, 0.07);
+}
+
+body {
+    background: var(--yoyo-paper);
+    color: var(--yoyo-text);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+*:focus-visible {
+    outline: 3px solid var(--yoyo-amber);
+    outline-offset: 2px;
+}
+
+#content,
+main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 36px 24px 60px;
+}
+
+/* ==========================================================================
+   Card
+   ========================================================================== */
+
+.card {
+    background: var(--yoyo-panel);
+    border: 1px solid var(--yoyo-border);
+    border-radius: var(--yoyo-radius);
+    box-shadow: var(--yoyo-shadow);
+    padding: 28px 30px;
+    margin-bottom: 22px;
+}
+
+/* ==========================================================================
+   Header — title + status badge
+   ========================================================================== */
+
+.card h2 {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--yoyo-ink);
+    margin: 0 0 22px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--yoyo-border);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 13px;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-family: "Inter", sans-serif;
+}
+
+.badge-pending      { background: #fef3c7; color: #92400e; }
+.badge-accepted     { background: #dbeafe; color: #1e40af; }
+.badge-in_progress  { background: #ede9fe; color: #5b21b6; }
+.badge-completed    { background: #dcfce7; color: #166534; }
+.badge-cancelled    { background: #fee2e2; color: #991b1b; }
+.badge-rejected     { background: #fee2e2; color: #991b1b; }
+
+/* ==========================================================================
+   Detail rows
+   ========================================================================== */
+
+.card > p {
+    margin: 0;
+    padding: 11px 0;
+    border-bottom: 1px solid #f0ece1;
+    font-size: 0.92rem;
+    color: var(--yoyo-text);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.card > p:last-of-type {
+    border-bottom: none;
+}
+
+.card > p strong {
+    font-family: "Oswald", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--yoyo-text-muted);
+    min-width: 150px;
+    flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Actions toolbar
+   ========================================================================== */
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    padding-top: 22px;
+    border-top: 1px dashed var(--yoyo-border);
+}
+
+.actions form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.actions .muted {
+    font-size: 0.85rem;
+    color: var(--yoyo-text-muted);
+    margin: 0;
+}
+
+/* Buttons — shared by <button> and .btn links */
+.actions button,
+.actions .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 7px;
+    font-family: "Oswald", sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.actions button,
+.actions .btn:not(.secondary) {
+    background: var(--yoyo-ink);
+    color: #ffffff;
+}
+
+.actions button:hover,
+.actions .btn:not(.secondary):hover {
+    background: var(--yoyo-ink-light);
+    transform: translateY(-1px);
+}
+
+.actions .btn.secondary {
+    background: var(--yoyo-paper);
+    color: var(--yoyo-text);
+    border-color: var(--yoyo-border);
+}
+
+.actions .btn.secondary:hover {
+    border-color: var(--yoyo-amber);
+    color: var(--yoyo-ink);
+    transform: translateY(-1px);
+}
+
+.actions button.danger {
+    background: var(--yoyo-danger-bg);
+    color: var(--yoyo-danger);
+    border-color: transparent;
+}
+
+.actions button.danger:hover {
+    background: var(--yoyo-danger);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Text input inside action forms (reason, worker id) */
+.actions input[type="text"],
+.actions input[type="number"] {
+    padding: 10px 12px;
+    font-size: 0.88rem;
+    font-family: "Inter", sans-serif;
+    border: 1.5px solid var(--yoyo-border);
+    border-radius: 7px;
+    background: var(--yoyo-paper);
+    min-width: 180px;
+    transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.actions input[type="text"]:focus,
+.actions input[type="number"]:focus {
+    outline: none;
+    border-color: var(--yoyo-amber);
+    background: var(--yoyo-panel);
+    box-shadow: 0 0 0 3px rgba(245, 166, 35, 0.18);
+}
+
+.actions input[type="hidden"] {
+    display: none;
+}
+
+/* ==========================================================================
+   Status History table
+   ========================================================================== */
+
+.card h3 {
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: 1rem;
+    margin: 0 0 18px;
+    color: var(--yoyo-ink);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.86rem;
+}
+
+table th {
+    text-align: left;
+    font-family: "Oswald", sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--yoyo-text-muted);
+    padding: 0 12px 10px;
+    border-bottom: 2px solid var(--yoyo-ink);
+}
+
+table td {
+    padding: 11px 12px;
+    border-bottom: 1px solid #f0ece1;
+    color: var(--yoyo-text);
+    vertical-align: top;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+table tr:nth-child(even) td {
+    background: #fbfaf7;
+}
+
+table td:nth-child(1),
+table td:nth-child(2) {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.8rem;
+    text-transform: capitalize;
+}
+
+table td:nth-child(3) {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.78rem;
+    color: var(--yoyo-text-muted);
+    white-space: nowrap;
+}
+
+table td:nth-child(4) {
+    color: var(--yoyo-text-muted);
+}
+
+/* Empty state when there are no logs */
+table tr:only-child td {
+    text-align: center;
+    color: var(--yoyo-text-muted);
+    padding: 24px 0;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 560px) {
+    .card {
+        padding: 22px 20px;
+    }
+
+    .card > p strong {
+        min-width: 100%;
+    }
+
+    .actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .actions form {
+        width: 100%;
+    }
+
+    .actions button,
+    .actions .btn {
+        justify-content: center;
+        width: 100%;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}

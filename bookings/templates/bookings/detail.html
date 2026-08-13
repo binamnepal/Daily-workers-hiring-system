@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/booking_detail.css' %}">
+{% endblock %}
 {% block title %}Booking Detail{% endblock %}
 {% block content %}
 <div class="card">
