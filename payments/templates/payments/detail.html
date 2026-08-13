@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Payment{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Payment for {{ booking.category.name }}</h2>
+    <p><strong>Amount:</strong> {{ payment.amount }}</p>
+    <p><strong>Method:</strong> {{ payment.get_method_display }}</p>
+    <p><strong>Status:</strong> <span class="badge badge-{{ payment.status }}">{{ payment.get_status_display }}</span></p>
+    {% if payment.status == "pending" %}
+    <form method="post" action="{% url 'payments:charge' payment.id %}">
+        {% csrf_token %}
+        {% for field in charge_form %}
+        <p><label>{{ field.label }}</label>{{ field }}</p>
+        {% endfor %}
+        <button type="submit">Confirm Charge</button>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
