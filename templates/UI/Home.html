@@ -1,17 +1,46 @@
 {% extends 'base.html' %}
-<<<<<<< HEAD
 {% load static %}
 
 {% block content %}
+<!-- Hero Section -->
 <section class="hero">
-    <h1>Find Trusted Handymen Near You</h1>
-    <p>Book plumbers, electricians, and more in minutes.</p>
-    <button>Book a Service</button>
-    <button>Call Us </button>
+    <div class="hero-text">
+        <h1>Find Trusted Handymen Near You</h1>
+        <p>Book plumbers, electricians, and more in minutes.</p>
+        <div class="hero-actions">
+            <button class="btn-primary">Book a Service</button>
+            <button class="btn-primary">Call Us</button>
+        </div>
+    </div>
 </section>
 
+<!-- Why YOYO / About Section -->
+<section class="about">
+    <div class="about-container">
+        <div class="about-text">
+            <h2>Why YOYO?</h2>
+            <p>
+                YOYO connects you with verified, background-checked professionals for every home service you need. 
+                No more asking around or waiting days — book a trusted plumber, electrician, carpenter, cleaner, 
+                or pet care expert in just a few taps, with transparent pricing and real-time availability.
+            </p>
+            <ul class="about-list">
+                <li>Verified & background-checked professionals</li>
+                <li>Same-day booking available</li>
+                <li>Transparent, upfront pricing</li>
+                <li>Rated and reviewed by real customers</li>
+            </ul>
+        </div>
+        
+        <div class="about-image">
+            <img src="https://cdn.durable.co/getty/1bdRPmEbC406u0IoTxUkSvWtkeqF76LuA9q7F5vkRVPNcJKH5hQTFTPMre90yQRl.jpeg" alt="Professional Handyman">
+        </div>
+    </div>
+</section>
+
+<!-- Popular Services Section -->
 <section class="services">
-    <h2>Popular Services</h2>
+    <h2 class="section-title">Popular Services</h2>
     <div class="services-grid">
 
         <div class="service-card">
@@ -55,14 +84,14 @@
         </div>
 
         <div class="service-card">
-    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=85" alt="Personal Service Provider">
-    <h3>Personal Service</h3>
-    <p>Trusted help for everyday personal tasks.</p>
-    <button class="see-more-btn" onclick="toggleDetails('personal-service-details')">See more</button>
-    <div id="personal-service-details" class="service-details">
-        <p>Reliable personal service providers for errands, home assistance, and day-to-day support tailored to your needs.</p>
-    </div>
-</div>
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=85" alt="Personal Service Provider">
+            <h3>Personal Service</h3>
+            <p>Trusted help for everyday personal tasks.</p>
+            <button class="see-more-btn" onclick="toggleDetails('personal-service-details')">See more</button>
+            <div id="personal-service-details" class="service-details">
+                <p>Reliable personal service providers for errands, home assistance, and day-to-day support tailored to your needs.</p>
+            </div>
+        </div>
 
         <div class="service-card">
             <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=800&q=85" alt="Pet Care">
@@ -77,25 +106,48 @@
     </div>
 </section>
 
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-col">
+            <h3>YOYO</h3>
+            <p>YOYO makes it easy to find trusted professionals for your everyday service needs.</p>
+            <p>We connect you with reliable workers for services you can trust.</p>
+        </div>
+        <div class="footer-col">
+            <h4>OUR SERVICES</h4>
+            <ul>
+                <li><a href="#">Cleaning</a></li>
+                <li><a href="#">Plumbing</a></li>
+                <li><a href="#">Electrical</a></li>
+                <li><a href="#">Repair & Maintenance</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>USEFUL LINKS</h4>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>CONTACT</h4>
+            <p>📍 Kathmandu, Nepal</p>
+            <p>✉️ support@handy.com</p>
+            <p>📞 +977 98XXXXXXXX</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>Copyright © 2026 <strong>Handy</strong>. All Rights Reserved.</p>
+    </div>
+</footer>
+
 <script>
 function toggleDetails(id) {
     const el = document.getElementById(id);
     el.style.display = (el.style.display === "block") ? "none" : "block";
 }
 </script>
-=======
-
-{% block content %}
-
-<div style="padding: 50px; text-align: center;">
-
-    <h1>Welcome to Handy</h1>
-
-    <p>
-        Find trusted workers for your everyday needs.
-    </p>
-
-</div>
-
->>>>>>> 38a8c9f563335d1275bdb4442475e9d22be50e85
 {% endblock %}
