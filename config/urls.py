@@ -1,5 +1,5 @@
 """
-URL configuration for daily_workers_hiring project.
+URL configuration for config project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/6.1/topics/http/urls/
@@ -15,9 +15,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('Services.urls')),
+    path('api/auth/token/', obtain_auth_token, name='api-token-auth'),
+    path('api/accounts/', include('accounts.urls')),
+    path('api/categories/', include('categories.urls')),
+    path('api/workers/', include('workers.urls')),
+    path('api/bookings/', include('bookings.urls')),
+    path('api/payments/', include('payments.urls')),
+    path('api/reviews/', include('reviews.urls')),
 ]
