@@ -1,0 +1,195 @@
+/* ==========================================================================
+   Dashboard Styles
+   ========================================================================== */
+
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #4338ca;
+    --primary-light: #eef2ff;
+    --secondary: #64748b;
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --radius: 12px;
+    --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-hover: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* ---------- Cards ---------- */
+
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px 28px;
+    margin-bottom: 24px;
+}
+
+.card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 6px;
+    letter-spacing: -0.02em;
+}
+
+.card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0 0 16px;
+    color: var(--text);
+}
+
+.muted {
+    color: var(--text-muted);
+    font-size: 0.925rem;
+    margin: 0 0 20px;
+}
+
+/* ---------- Action Buttons ---------- */
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    white-space: nowrap;
+}
+
+.btn:not(.secondary) {
+    background: var(--primary);
+    color: #fff;
+}
+
+.btn:not(.secondary):hover {
+    background: var(--primary-dark);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+    transform: translateY(-1px);
+}
+
+.btn.secondary {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    border: 1px solid transparent;
+}
+
+.btn.secondary:hover {
+    background: #e0e7ff;
+    transform: translateY(-1px);
+}
+
+/* ---------- Stats Grid ---------- */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 20px 22px;
+    text-align: left;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.stat-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+}
+
+.stat-card h3 {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin: 0 0 8px;
+}
+
+.stat-card p {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+}
+
+/* Color-code stats by position */
+.stat-card:nth-child(1) p { color: var(--primary); }
+.stat-card:nth-child(2) p { color: var(--warning); }
+.stat-card:nth-child(3) p { color: var(--success); }
+.stat-card:nth-child(4) p { color: var(--danger); }
+
+/* ---------- Recent Activity List ---------- */
+
+.card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.card ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.925rem;
+    color: var(--text);
+}
+
+.card ul li:last-child {
+    border-bottom: none;
+}
+
+.card ul li:only-child {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 24px 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+    .card {
+        padding: 18px 20px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

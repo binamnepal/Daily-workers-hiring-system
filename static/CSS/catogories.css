@@ -1,52 +1,164 @@
-h2 {
+/* Page */
+
+.hero {
+    padding: 80px 40px;
     text-align: center;
-    margin: 40px 0;
+    border-radius: 20px;
+    margin-bottom: 50px;
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+    color: white;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.hero-actions button,
+.see-more-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.call-btn {
+    background: transparent;
+    border: 2px solid white !important;
+    color: white;
+}
+
+.hero-actions button:hover,
+.see-more-btn:hover,
+.call-btn:hover {
+    transform: translateY(-2px);
+    transition: 0.3s;
+}
+
+/* About Section */
+
+.about {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin: 70px 0;
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text h2 {
+    margin-bottom: 20px;
+    font-size: 36px;
+}
+
+.about-text p {
+    line-height: 1.8;
+    margin-bottom: 20px;
+}
+
+.about-list {
+    padding-left: 20px;
+}
+
+.about-list li {
+    margin-bottom: 10px;
+}
+
+.about-image {
+    flex: 1;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* Services */
+
+.services h2 {
+    text-align: center;
+    margin-bottom: 40px;
     font-size: 36px;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
 }
 
 .card {
-    background: #ffffff;
     padding: 25px;
     border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    background: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+    text-align: center;
 }
 
 .card:hover {
     transform: translateY(-8px);
 }
 
-.card h3 {
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
     margin-bottom: 15px;
+}
+
+.card h3 {
+    margin-bottom: 10px;
 }
 
 .card h3 a {
     text-decoration: none;
-    color: #222;
-    font-size: 24px;
-}
-
-.card h3 a:hover {
-    color: #007bff;
+    color: inherit;
 }
 
 .muted {
     color: #666;
-    line-height: 1.6;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
-.card p:last-child {
-    font-weight: 600;
-    font-size: 18px;
-    color: #007bff;
+.see-more-btn {
+    margin-top: 15px;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 50px 20px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .about {
+        flex-direction: column;
+    }
+
+    .about-text h2,
+    .services h2 {
+        font-size: 28px;
+    }
 }

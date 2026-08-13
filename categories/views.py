@@ -11,3 +11,6 @@ def category_list(request):
 def category_detail(request, slug):
     category = CategoryService.get_by_slug(slug)
     return render(request, "categories/detail.html", {"category": category})
+
+def about(request):
+    return render(request, "UI/About.html")

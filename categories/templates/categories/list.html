@@ -1,20 +1,93 @@
 {% extends "base.html" %}
 {% load static %}
+
 {% block title %}Services{% endblock %}
+
 {% block css %}
-  <link rel="stylesheet" href="{% static 'css/catogories.css' %}">
+<link rel="stylesheet" href="{% static 'css/catogories.css' %}">
 {% endblock %}
+
 {% block content %}
-<h2>Browse Services</h2>
-<div class="grid">
-    {% for category in categories %}
-    <div class="card">
-        <h3><a href="{% url 'categories:detail' category.slug %}">{{ category.name }}</a></h3>
-        <p class="muted">{{ category.description|default:"" }}</p>
-        <p>Starting at {{ category.base_price }}</p>
+
+<section class="hero">
+    <div class="hero-text">
+        <h1>Find Trusted Handymen Near You</h1>
+        <p>Book plumbers, electricians, and more in minutes.</p>
+
+        <div class="hero-actions">
+            <a href="{% url 'categories:list' %}">
+                <button>Book a Service</button>
+            </a>
+
+            <button class="call-btn">Call Us</button>
+        </div>
     </div>
-    {% empty %}
-    <p>No service categories yet.</p>
-    {% endfor %}
-</div>
+</section>
+
+<section class="about">
+    <div class="about-text">
+        <h2>Why YOYO?</h2>
+
+        <p>
+            YOYO connects you with verified, background-checked
+            professionals for every home service you need.
+        </p>
+
+        <ul class="about-list">
+            <li>Verified and background-checked professionals</li>
+            <li>Same-day booking available</li>
+            <li>Transparent, upfront pricing</li>
+            <li>Rated and reviewed by real customers</li>
+        </ul>
+    </div>
+
+    <div class="about-image">
+        <img src="https://cdn.durable.co/getty/1bdRPmEbC406u0IoTxUkSvWtkeqF76LuA9q7F5vkRVPNcJKH5hQTFTPMre90yQRl.jpeg"
+             alt="Professional Handyman">
+    </div>
+</section>
+
+<section class="services">
+
+    <h2>Browse Services</h2>
+
+    <div class="grid">
+
+        {% for category in categories %}
+        <div class="card">
+
+            {% if category.image %}
+            <img src="{{ category.image.url }}" alt="{{ category.name }}">
+            {% endif %}
+
+            <h3>
+                <a href="{% url 'categories:detail' category.slug %}">
+                    {{ category.name }}
+                </a>
+            </h3>
+
+            <p class="muted">
+                {{ category.description|default:"No description available." }}
+            </p>
+
+            <p>Starting at {{ category.base_price }}</p>
+
+            <a href="{% url 'categories:detail' category.slug %}">
+                <button class="see-more-btn">
+                    See More
+                </button>
+            </a>
+
+        </div>
+
+        {% empty %}
+
+        <p>No service categories yet.</p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
 {% endblock %}
