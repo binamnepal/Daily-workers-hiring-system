@@ -7,6 +7,9 @@ body { font-family: Arial, sans-serif; }
     align-items: center;
     background-color: #1a1a2e;
     padding: 15px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 .navbar .logo {
     color: #fff;
