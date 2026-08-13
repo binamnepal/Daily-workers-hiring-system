@@ -4,22 +4,23 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
     <meta charset="UTF-8">
     <title>{% block title %}YOYO - Home Services{% endblock %}</title>
 </head>
-
 
 <body>
 
     <nav class="navbar">
         <a href="/" class="logo">YOYO</a>
+
         <ul class="nav-links">
-    <li><a href="/">Home</a></li>
-    <li><a href="/services/">Services</a></li>
-    <li><a href="/about/">About</a></li>
-    <li><a href="#">Contact</a></li>
-    </ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/services/">Services</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+
         <a href="#" class="book-btn">Book Now</a>
     </nav>
 
@@ -27,6 +28,9 @@
         {% block content %}
         {% endblock %}
     </main>
+
+    <!-- Footer appears on every page -->
+    {% include 'UI/footer.html' %}
 
 </body>
 
