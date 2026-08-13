@@ -1,18 +1,13 @@
-from rest_framework.generics import ListAPIView, RetrieveAPIView
-from rest_framework.permissions import AllowAny
+from django.shortcuts import get_object_or_404, render
 
-from .models import ServiceCategory
-from .serializers import ServiceCategorySerializer
+from .services import CategoryService
 
 
-class ServiceCategoryListView(ListAPIView):
-    permission_classes = [AllowAny]
-    serializer_class = ServiceCategorySerializer
-    queryset = ServiceCategory.objects.filter(is_active=True)
+def category_list(request):
+    categories = CategoryService.list_active()
+    return render(request, "categories/list.html", {"categories": categories})
 
 
-class ServiceCategoryDetailView(RetrieveAPIView):
-    permission_classes = [AllowAny]
-    serializer_class = ServiceCategorySerializer
-    queryset = ServiceCategory.objects.filter(is_active=True)
-    lookup_field = "slug"
+def category_detail(request, slug):
+    category = CategoryService.get_by_slug(slug)
+    return render(request, "categories/detail.html", {"category": category})

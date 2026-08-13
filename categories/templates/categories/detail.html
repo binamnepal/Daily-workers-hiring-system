@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ category.name }}{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>{{ category.name }}</h2>
+    <p>{{ category.description }}</p>
+    <p><strong>Starting price:</strong> {{ category.base_price }}</p>
+    <a class="btn" href="{% url 'workers:search' %}?category={{ category.slug }}">Find a {{ category.name }} worker</a>
+</div>
+{% endblock %}

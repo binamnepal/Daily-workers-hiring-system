@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Find a Worker{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Find a Worker</h2>
+    <form method="get">
+        <div class="grid">
+            <p><label>{{ form.category.label }}</label>{{ form.category }}</p>
+            <p><label>{{ form.city.label }}</label>{{ form.city }}</p>
+        </div>
+        <p><label>{{ form.min_rating.label }}</label>{{ form.min_rating }}</p>
+        <button type="submit">Search</button>
+    </form>
+</div>
+
+{% for worker in workers %}
+<div class="card">
+    <h3><a href="{% url 'workers:detail' worker.id %}">{{ worker.user.username }}</a></h3>
+    <p class="muted">{{ worker.city }} &middot; Rating: {{ worker.average_rating }} &middot; {{ worker.total_jobs_completed }} jobs done</p>
+    <p>{{ worker.bio|default:"" }}</p>
+    <p>Skills: {% for s in worker.skills.all %}{{ s.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+</div>
+{% empty %}
+<p>No workers match your search.</p>
+{% endfor %}
+{% endblock %}

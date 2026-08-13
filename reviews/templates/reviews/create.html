@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Leave a Review{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Review: {{ booking.worker.user.username }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <p><label>{{ field.label }}</label>{{ field }}</p>
+        {% endfor %}
+        <button type="submit">Submit Review</button>
+    </form>
+</div>
+{% endblock %}

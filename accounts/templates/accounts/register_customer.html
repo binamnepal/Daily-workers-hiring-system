@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Sign up as Customer{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Sign up as Customer</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+        <p>
+            <label>{{ field.label }}</label>
+            {{ field }}
+            {{ field.errors }}
+        </p>
+        {% endfor %}
+        <button type="submit">Create account</button>
+    </form>
+    <p class="muted">Already have an account? <a href="{% url 'accounts:login' %}">Log in</a></p>
+</div>
+{% endblock %}

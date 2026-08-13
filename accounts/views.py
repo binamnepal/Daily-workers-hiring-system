@@ -1,56 +1,88 @@
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError as DjangoValidationError
-from rest_framework import status
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.shortcuts import redirect, render
 
-from .serializers import (
-    CustomerRegisterSerializer,
-    LocationUpdateSerializer,
-    UserSerializer,
-    WorkerRegisterSerializer,
-)
+from .forms import CustomerRegisterForm, LocationUpdateForm, LoginForm, WorkerRegisterForm
 from .services import AccountService
 
 
-class RegisterCustomerView(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        serializer = CustomerRegisterSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        try:
-            user = AccountService.register_customer(**serializer.validated_data)
-        except DjangoValidationError as exc:
-            return Response({"detail": exc.messages}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
-
-
-class RegisterWorkerView(APIView):
-    permission_classes = [AllowAny]
-
-    def post(self, request):
-        serializer = WorkerRegisterSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        try:
-            user = AccountService.register_worker(**serializer.validated_data)
-        except DjangoValidationError as exc:
-            return Response({"detail": exc.messages}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)
+def register_customer(request):
+    if request.method == "POST":
+        form = CustomerRegisterForm(request.POST)
+        if form.is_valid():
+            try:
+                user = AccountService.register_customer(**form.cleaned_data)
+            except DjangoValidationError as exc:
+                form.add_error(None, exc.message if hasattr(exc, "message") else str(exc))
+            else:
+                login(request, user)
+                messages.success(request, "Welcome! Your customer account has been created.")
+                return redirect("accounts:dashboard")
+    else:
+        form = CustomerRegisterForm()
+    return render(request, "accounts/register_customer.html", {"form": form})
 
 
-class MeView(APIView):
-    permission_classes = [IsAuthenticated]
+def register_worker(request):
+    if request.method == "POST":
+        form = WorkerRegisterForm(request.POST)
+        if form.is_valid():
+            try:
+                user = AccountService.register_worker(**form.cleaned_data)
+            except DjangoValidationError as exc:
+                form.add_error(None, exc.message if hasattr(exc, "message") else str(exc))
+            else:
+                login(request, user)
+                messages.success(request, "Welcome! Your worker profile has been created.")
+                return redirect("accounts:dashboard")
+    else:
+        form = WorkerRegisterForm()
+    return render(request, "accounts/register_worker.html", {"form": form})
 
-    def get(self, request):
-        return Response(UserSerializer(request.user).data)
+
+def login_view(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = authenticate(
+                request,
+                username=form.cleaned_data["username"],
+                password=form.cleaned_data["password"],
+            )
+            if user is not None:
+                login(request, user)
+                return redirect("accounts:dashboard")
+            form.add_error(None, "Invalid username or password.")
+    else:
+        form = LoginForm()
+    return render(request, "accounts/login.html", {"form": form})
 
 
-class UpdateLocationView(APIView):
-    permission_classes = [IsAuthenticated]
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect("accounts:login")
 
-    def post(self, request):
-        serializer = LocationUpdateSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = AccountService.update_location(user=request.user, **serializer.validated_data)
-        return Response(UserSerializer(user).data)
+
+@login_required
+def dashboard(request):
+    return render(request, "accounts/dashboard.html")
+
+
+@login_required
+def update_location(request):
+    if request.method == "POST":
+        form = LocationUpdateForm(request.POST)
+        if form.is_valid():
+            AccountService.update_location(user=request.user, **form.cleaned_data)
+            messages.success(request, "Location updated.")
+            return redirect("accounts:dashboard")
+    else:
+        form = LocationUpdateForm(initial={
+            "latitude": request.user.latitude,
+            "longitude": request.user.longitude,
+            "address": request.user.address,
+        })
+    return render(request, "accounts/update_location.html", {"form": form})

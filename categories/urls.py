@@ -5,6 +5,6 @@ from . import views
 app_name = "categories"
 
 urlpatterns = [
-    path("", views.ServiceCategoryListView.as_view(), name="list"),
-    path("<slug:slug>/", views.ServiceCategoryDetailView.as_view(), name="detail"),
+    path("", views.category_list, name="list"),
+    path("<slug:slug>/", views.category_detail, name="detail"),
 ]

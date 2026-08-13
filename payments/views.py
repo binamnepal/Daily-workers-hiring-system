@@ -1,40 +1,46 @@
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError as DjangoValidationError
-from django.shortcuts import get_object_or_404
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404, redirect, render
 
 from bookings.models import Booking
 
+from .forms import ChargePaymentForm, CreatePaymentForm
 from .models import Payment
-from .serializers import ChargePaymentSerializer, CreatePaymentSerializer, PaymentSerializer
 from .services import PaymentService
 
 
-class CreatePaymentView(APIView):
-    permission_classes = [IsAuthenticated]
+@login_required
+def pay_for_booking(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id, customer=request.user)
+    payment = getattr(booking, "payment", None)
 
-    def post(self, request, booking_id):
-        booking = get_object_or_404(Booking, id=booking_id, customer=request.user)
-        serializer = CreatePaymentSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        try:
-            payment = PaymentService.create_for_booking(booking=booking, **serializer.validated_data)
-        except DjangoValidationError as exc:
-            return Response({"detail": exc.messages}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(PaymentSerializer(payment).data, status=status.HTTP_201_CREATED)
+    if payment is None:
+        if request.method == "POST":
+            form = CreatePaymentForm(request.POST)
+            if form.is_valid():
+                try:
+                    payment = PaymentService.create_for_booking(booking=booking, **form.cleaned_data)
+                except DjangoValidationError as exc:
+                    messages.error(request, str(exc))
+                    return redirect("bookings:detail", id=booking.id)
+        else:
+            form = CreatePaymentForm()
+            return render(request, "payments/create.html", {"form": form, "booking": booking})
+
+    charge_form = ChargePaymentForm()
+    return render(request, "payments/detail.html", {"payment": payment, "booking": booking, "charge_form": charge_form})
 
 
-class ChargePaymentView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, payment_id):
-        payment = get_object_or_404(Payment, id=payment_id, booking__customer=request.user)
-        serializer = ChargePaymentSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        try:
-            payment = PaymentService.charge(payment=payment, **serializer.validated_data)
-        except DjangoValidationError as exc:
-            return Response({"detail": exc.messages}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(PaymentSerializer(payment).data)
+@login_required
+def charge_payment(request, payment_id):
+    payment = get_object_or_404(Payment, id=payment_id, booking__customer=request.user)
+    if request.method == "POST":
+        form = ChargePaymentForm(request.POST)
+        if form.is_valid():
+            try:
+                PaymentService.charge(payment=payment, **form.cleaned_data)
+                messages.success(request, "Payment successful.")
+            except DjangoValidationError as exc:
+                messages.error(request, str(exc))
+    return redirect("bookings:detail", id=payment.booking.id)

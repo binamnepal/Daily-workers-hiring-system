@@ -1,140 +1,118 @@
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError as DjangoValidationError
-from django.shortcuts import get_object_or_404
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404, redirect, render
 
 from workers.models import WorkerProfile
 
+from .forms import AssignWorkerForm, CancelBookingForm, CompleteBookingForm, CreateBookingForm
 from .models import Booking
-from .serializers import (
-    AssignWorkerSerializer,
-    BookingSerializer,
-    CancelBookingSerializer,
-    CompleteBookingSerializer,
-    CreateBookingSerializer,
-)
 from .services import BookingService
 
 
-def _err(exc):
-    return Response({"detail": exc.messages if hasattr(exc, "messages") else str(exc)},
-                     status=status.HTTP_400_BAD_REQUEST)
+@login_required
+def create_booking(request):
+    if request.method == "POST":
+        form = CreateBookingForm(request.POST)
+        if form.is_valid():
+            try:
+                booking = BookingService.create_booking(customer=request.user, **form.cleaned_data)
+            except DjangoValidationError as exc:
+                form.add_error(None, exc.message if hasattr(exc, "message") else str(exc))
+            else:
+                messages.success(request, "Booking request created.")
+                return redirect("bookings:detail", id=booking.id)
+    else:
+        initial = {}
+        worker_id = request.GET.get("worker_id")
+        if worker_id:
+            initial["worker_id"] = worker_id
+        form = CreateBookingForm(initial=initial)
+    return render(request, "bookings/create.html", {"form": form})
 
 
-class CreateBookingView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        serializer = CreateBookingSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        try:
-            booking = BookingService.create_booking(customer=request.user, **serializer.validated_data)
-        except DjangoValidationError as exc:
-            return _err(exc)
-        return Response(BookingSerializer(booking).data, status=status.HTTP_201_CREATED)
+@login_required
+def my_bookings(request):
+    if hasattr(request.user, "worker_profile"):
+        bookings = BookingService.list_for_worker(request.user.worker_profile)
+    else:
+        bookings = BookingService.list_for_customer(request.user)
+    return render(request, "bookings/mine.html", {"bookings": bookings})
 
 
-class MyBookingsView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        if hasattr(request.user, "worker_profile"):
-            bookings = BookingService.list_for_worker(request.user.worker_profile)
-        else:
-            bookings = BookingService.list_for_customer(request.user)
-        return Response(BookingSerializer(bookings, many=True).data)
-
-
-class BookingDetailView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request, id):
-        booking = get_object_or_404(Booking, id=id)
-        return Response(BookingSerializer(booking).data)
+@login_required
+def booking_detail(request, id):
+    booking = get_object_or_404(Booking, id=id)
+    return render(request, "bookings/detail.html", {
+        "booking": booking,
+        "assign_form": AssignWorkerForm(),
+        "cancel_form": CancelBookingForm(),
+        "complete_form": CompleteBookingForm(),
+    })
 
 
-class AssignWorkerView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, id):
-        booking = get_object_or_404(Booking, id=id, customer=request.user)
-        serializer = AssignWorkerSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        worker = get_object_or_404(WorkerProfile, id=serializer.validated_data["worker_id"])
-        try:
-            booking = BookingService.assign_worker(booking=booking, worker=worker)
-        except DjangoValidationError as exc:
-            return _err(exc)
-        return Response(BookingSerializer(booking).data)
-
-
-class AcceptBookingView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, id):
-        booking = get_object_or_404(Booking, id=id)
-        try:
-            booking = BookingService.accept(booking=booking, worker=request.user.worker_profile)
-        except DjangoValidationError as exc:
-            return _err(exc)
-        return Response(BookingSerializer(booking).data)
+@login_required
+def assign_worker(request, id):
+    booking = get_object_or_404(Booking, id=id, customer=request.user)
+    if request.method == "POST":
+        form = AssignWorkerForm(request.POST)
+        if form.is_valid():
+            worker = get_object_or_404(WorkerProfile, id=form.cleaned_data["worker_id"])
+            try:
+                BookingService.assign_worker(booking=booking, worker=worker)
+                messages.success(request, "Worker assigned.")
+            except DjangoValidationError as exc:
+                messages.error(request, str(exc))
+    return redirect("bookings:detail", id=id)
 
 
-class RejectBookingView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, id):
-        booking = get_object_or_404(Booking, id=id)
-        reason = request.data.get("reason", "")
-        try:
-            booking = BookingService.reject(booking=booking, worker=request.user.worker_profile, reason=reason)
-        except DjangoValidationError as exc:
-            return _err(exc)
-        return Response(BookingSerializer(booking).data)
-
-
-class StartBookingView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, id):
-        booking = get_object_or_404(Booking, id=id)
-        try:
-            booking = BookingService.start(booking=booking, worker=request.user.worker_profile)
-        except DjangoValidationError as exc:
-            return _err(exc)
-        return Response(BookingSerializer(booking).data)
+def _worker_action(request, id, action, **kwargs):
+    booking = get_object_or_404(Booking, id=id)
+    worker = getattr(request.user, "worker_profile", None)
+    if worker is None:
+        messages.error(request, "You don't have a worker profile.")
+        return redirect("bookings:detail", id=id)
+    try:
+        action(booking=booking, worker=worker, **kwargs)
+        messages.success(request, "Booking updated.")
+    except DjangoValidationError as exc:
+        messages.error(request, str(exc))
+    return redirect("bookings:detail", id=id)
 
 
-class CompleteBookingView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, id):
-        booking = get_object_or_404(Booking, id=id)
-        serializer = CompleteBookingSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        try:
-            booking = BookingService.complete(
-                booking=booking, worker=request.user.worker_profile,
-                final_price=serializer.validated_data.get("final_price"),
-            )
-        except DjangoValidationError as exc:
-            return _err(exc)
-        return Response(BookingSerializer(booking).data)
+@login_required
+def accept_booking(request, id):
+    return _worker_action(request, id, BookingService.accept)
 
 
-class CancelBookingView(APIView):
-    permission_classes = [IsAuthenticated]
+@login_required
+def reject_booking(request, id):
+    form = CancelBookingForm(request.POST or None)
+    reason = form.data.get("reason", "") if request.method == "POST" else ""
+    return _worker_action(request, id, BookingService.reject, reason=reason)
 
-    def post(self, request, id):
-        booking = get_object_or_404(Booking, id=id)
-        serializer = CancelBookingSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        try:
-            booking = BookingService.cancel(
-                booking=booking, actor=request.user, reason=serializer.validated_data.get("reason", "")
-            )
-        except DjangoValidationError as exc:
-            return _err(exc)
-        return Response(BookingSerializer(booking).data)
+
+@login_required
+def start_booking(request, id):
+    return _worker_action(request, id, BookingService.start)
+
+
+@login_required
+def complete_booking(request, id):
+    form = CompleteBookingForm(request.POST or None)
+    final_price = None
+    if form.is_valid():
+        final_price = form.cleaned_data.get("final_price")
+    return _worker_action(request, id, BookingService.complete, final_price=final_price)
+
+
+@login_required
+def cancel_booking(request, id):
+    booking = get_object_or_404(Booking, id=id)
+    reason = request.POST.get("reason", "")
+    try:
+        BookingService.cancel(booking=booking, actor=request.user, reason=reason)
+        messages.success(request, "Booking cancelled.")
+    except DjangoValidationError as exc:
+        messages.error(request, str(exc))
+    return redirect("bookings:detail", id=id)

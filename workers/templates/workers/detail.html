@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{ worker.user.username }}{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>{{ worker.user.username }}</h2>
+    <p class="muted">{{ worker.city }} &middot; Rating: {{ worker.average_rating }} &middot; {{ worker.total_jobs_completed }} jobs completed</p>
+    <p>{{ worker.bio|default:"No bio provided." }}</p>
+    <p>Hourly rate: {{ worker.hourly_rate|default:"Not set" }}</p>
+    <p>Skills: {% for s in worker.skills.all %}{{ s.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+    {% if user.is_authenticated and user.role == "customer" %}
+    <a class="btn" href="{% url 'bookings:create' %}?worker_id={{ worker.id }}">Hire {{ worker.user.username }}</a>
+    {% endif %}
+</div>
+{% endblock %}

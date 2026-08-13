@@ -1,74 +1,64 @@
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError as DjangoValidationError
-from rest_framework import status
-from rest_framework.generics import RetrieveAPIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.shortcuts import get_object_or_404, redirect, render
 
+from .forms import AvailabilityForm, WorkerSearchForm
 from .models import WorkerProfile
-from .serializers import (
-    AddAvailabilitySerializer,
-    WorkerProfileSerializer,
-    WorkerSearchQuerySerializer,
-)
 from .services import WorkerService
 
 
-class WorkerSearchView(APIView):
-    permission_classes = [AllowAny]
-
-    def get(self, request):
-        query = WorkerSearchQuerySerializer(data=request.query_params)
-        query.is_valid(raise_exception=True)
+def worker_search(request):
+    form = WorkerSearchForm(request.GET or None)
+    workers = []
+    if form.is_valid():
         workers = WorkerService.search(
-            category_slug=query.validated_data.get("category"),
-            city=query.validated_data.get("city"),
-            min_rating=query.validated_data.get("min_rating"),
+            category_slug=form.cleaned_data.get("category") or None,
+            city=form.cleaned_data.get("city") or None,
+            min_rating=form.cleaned_data.get("min_rating"),
         )
-        return Response(WorkerProfileSerializer(workers, many=True).data)
+    return render(request, "workers/search.html", {"form": form, "workers": workers})
 
 
-class WorkerDetailView(RetrieveAPIView):
-    permission_classes = [AllowAny]
-    serializer_class = WorkerProfileSerializer
-    queryset = WorkerProfile.objects.all()
-    lookup_field = "id"
+def worker_detail(request, id):
+    worker = get_object_or_404(WorkerProfile, id=id)
+    return render(request, "workers/detail.html", {"worker": worker})
 
 
-class MyWorkerProfileView(APIView):
-    permission_classes = [IsAuthenticated]
+@login_required
+def my_profile(request):
+    profile = getattr(request.user, "worker_profile", None)
+    if profile is None:
+        messages.error(request, "You don't have a worker profile.")
+        return redirect("accounts:dashboard")
 
-    def get(self, request):
-        profile = getattr(request.user, "worker_profile", None)
-        if profile is None:
-            return Response({"detail": "No worker profile for this user."}, status=404)
-        return Response(WorkerProfileSerializer(profile).data)
+    if request.method == "POST" and "toggle_available" in request.POST:
+        WorkerService.set_available(profile, not profile.is_available)
+        return redirect("workers:my_profile")
 
-
-class AddAvailabilityView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        profile = getattr(request.user, "worker_profile", None)
-        if profile is None:
-            return Response({"detail": "No worker profile for this user."}, status=404)
-
-        serializer = AddAvailabilitySerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        try:
-            slot = WorkerService.add_availability(worker=profile, **serializer.validated_data)
-        except DjangoValidationError as exc:
-            return Response({"detail": exc.messages}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(WorkerProfileSerializer(profile).data, status=status.HTTP_201_CREATED)
+    availability_form = AvailabilityForm()
+    return render(request, "workers/my_profile.html", {"worker": profile, "form": availability_form})
 
 
-class SetAvailableView(APIView):
-    permission_classes = [IsAuthenticated]
+@login_required
+def add_availability(request):
+    profile = getattr(request.user, "worker_profile", None)
+    if profile is None:
+        messages.error(request, "You don't have a worker profile.")
+        return redirect("accounts:dashboard")
 
-    def post(self, request):
-        profile = getattr(request.user, "worker_profile", None)
-        if profile is None:
-            return Response({"detail": "No worker profile for this user."}, status=404)
-        available = bool(request.data.get("is_available", True))
-        profile = WorkerService.set_available(profile, available)
-        return Response(WorkerProfileSerializer(profile).data)
+    if request.method == "POST":
+        form = AvailabilityForm(request.POST)
+        if form.is_valid():
+            try:
+                WorkerService.add_availability(
+                    worker=profile,
+                    weekday=int(form.cleaned_data["weekday"]),
+                    start_time=form.cleaned_data["start_time"],
+                    end_time=form.cleaned_data["end_time"],
+                )
+            except DjangoValidationError as exc:
+                messages.error(request, str(exc))
+            else:
+                messages.success(request, "Availability slot added.")
+    return redirect("workers:my_profile")
