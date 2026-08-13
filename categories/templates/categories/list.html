@@ -1,11 +1,15 @@
 {% extends "base.html" %}
-{% load%}
+{% load static %}
 {% block title %}Services{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/catogories.css' %}">
+{% endblock %}
 {% block content %}
 <h2>Browse Services</h2>
 <div class="grid">
     {% for category in categories %}
     <div class="card">
+        <img src="{{ category.service_image }}">
         <h3><a href="{% url 'categories:detail' category.slug %}">{{ category.name }}</a></h3>
         <p class="muted">{{ category.description|default:"" }}</p>
         <p>Starting at {{ category.base_price }}</p>
