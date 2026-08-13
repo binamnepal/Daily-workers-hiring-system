@@ -4,3 +4,6 @@ def home(request):
 def about(request):
     return render(request, 'UI/About.html')
 
+# Create your views here.
+def home(request):
+    return render(request, 'UI/Home.html')
