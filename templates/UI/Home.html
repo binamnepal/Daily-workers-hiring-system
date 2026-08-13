@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-text">
+        <h1>Find Trusted Handymen Near You</h1>
+        <p>Book plumbers, electricians, and more in minutes.</p>
+        <div class="hero-actions">
+            <button>Book a Service</button>
+            <button class="call-btn">Call Us</button>
+        </div>
+    </div>
+    
+</section>
+
+<section class="about">
+    <div class="about-text">
+        <h2>Why YOYO?</h2>
+        <p>YOYO connects you with verified, background-checked professionals for every home service you need. No more asking around or waiting days — book a trusted plumber, electrician, carpenter, cleaner, or pet care expert in just a few taps, with transparent pricing and real-time availability.</p>
+        <ul class="about-list">
+            <li>Verified & background-checked professionals</li>
+            <li>Same-day booking available</li>
+            <li>Transparent, upfront pricing</li>
+            <li>Rated and reviewed by real customers</li>
+        </ul>
+    </div>
+    <div class="about-image">
+    <img src="https://cdn.durable.co/getty/1bdRPmEbC406u0IoTxUkSvWtkeqF76LuA9q7F5vkRVPNcJKH5hQTFTPMre90yQRl.jpeg"alt="Professional Handyman">
+    </div>
+</section>
+
+<section class="services">
+    <h2>Popular Services</h2>
+    <div class="services-grid">
+
+        <div class="service-card">
+            <img src="https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?auto=format&fit=crop&w=800&q=85" alt="Professional Plumber">
+            <h3>Plumber</h3>
+            <p>Fix leaks, pipes, and water systems.</p>
+            <button class="see-more-btn" onclick="toggleDetails('plumber-details')">See more</button>
+            <div id="plumber-details" class="service-details">
+                <p>Our verified plumbers handle leak repairs, pipe installation, drainage issues, and bathroom fittings.</p>
+            </div>
+        </div>
+
+        <div class="service-card">
+            <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=800&q=85" alt="Professional Electrician">
+            <h3>Electrician</h3>
+            <p>Wiring, repairs, and installations.</p>
+            <button class="see-more-btn" onclick="toggleDetails('electrician-details')">See more</button>
+            <div id="electrician-details" class="service-details">
+                <p>Licensed electricians for wiring faults, switchboard repairs, and safety inspections.</p>
+            </div>
+        </div>
+
+        <div class="service-card">
+            <img src="https://images.unsplash.com/photo-1601058268499-e52658b8bb88?auto=format&fit=crop&w=800&q=85" alt="Professional Carpenter">
+            <h3>Carpenter</h3>
+            <p>Furniture and woodwork repairs.</p>
+            <button class="see-more-btn" onclick="toggleDetails('carpenter-details')">See more</button>
+            <div id="carpenter-details" class="service-details">
+                <p>Skilled carpenters for furniture repair, custom woodwork, and door fitting.</p>
+            </div>
+        </div>
+
+        <div class="service-card">
+            <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=85" alt="Professional Cleaner">
+            <h3>Cleaner</h3>
+            <p>Deep cleaning for home and office.</p>
+            <button class="see-more-btn" onclick="toggleDetails('cleaner-details')">See more</button>
+            <div id="cleaner-details" class="service-details">
+                <p>Professional cleaners for homes, offices, and deep sanitization.</p>
+            </div>
+        </div>
+
+        <div class="service-card">
+    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=85" alt="Personal Service Provider">
+    <h3>Personal Service</h3>
+    <p>Trusted help for everyday personal tasks.</p>
+    <button class="see-more-btn" onclick="toggleDetails('personal-service-details')">See more</button>
+    <div id="personal-service-details" class="service-details">
+        <p>Reliable personal service providers for errands, home assistance, and day-to-day support tailored to your needs.</p>
+    </div>
+</div>
+
+        <div class="service-card">
+            <img src="https://images.unsplash.com/photo-1601758228041-f3b2795255f1?auto=format&fit=crop&w=800&q=85" alt="Pet Care">
+            <h3>Pet Care</h3>
+            <p>Grooming and pet sitting services.</p>
+            <button class="see-more-btn" onclick="toggleDetails('petcare-details')">See more</button>
+            <div id="petcare-details" class="service-details">
+                <p>Trusted pet sitters and groomers for daily walks, feeding, and grooming.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script>
+function toggleDetails(id) {
+    const el = document.getElementById(id);
+    el.style.display = (el.style.display === "block") ? "none" : "block";
+}
+</script>
+{% endblock %}
