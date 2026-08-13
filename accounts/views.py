@@ -86,3 +86,5 @@ def update_location(request):
             "address": request.user.address,
         })
     return render(request, "accounts/update_location.html", {"form": form})
+def register_chooser(request):
+    return render(request, "accounts/register.html")

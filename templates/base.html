@@ -4,69 +4,6 @@
 <head>
     <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Daily Worker Hiring{% endblock %}</title>
-    <style>
-        * { box-sizing: border-box; }
-        body { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #f4f5f7; color: #222; }
-        header { background: #1f2937; color: #fff; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
-        header a { color: #fff; text-decoration: none; margin-right: 16px; font-size: 14px; }
-        header .brand { font-weight: 700; font-size: 18px; margin-right: 32px; }
-        .nav-left { display: flex; align-items: center; }
-        main { max-width: 900px; margin: 24px auto; padding: 0 16px; }
-        .card { background: #fff; border-radius: 8px; padding: 20px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-        h1, h2, h3 { margin-top: 0; }
-        form p { margin: 10px 0; }
-        label { display: block; font-weight: 600; margin-bottom: 4px; font-size: 14px; }
-        input, select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-        button, .btn { display: inline-block; background: #2563eb; color: #fff; border: none; padding: 9px 16px; border-radius: 5px; cursor: pointer; font-size: 14px; text-decoration: none; }
-        button.secondary, .btn.secondary { background: #6b7280; }
-        button.danger, .btn.danger { background: #dc2626; }
-        .messages { list-style: none; padding: 0; }
-        .messages li { background: #fef3c7; padding: 10px; border-radius: 5px; margin-bottom: 8px; }
-        .badge { display: inline-block; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; }
-        .badge-pending { background: #fef3c7; color: #92400e; }
-        .badge-accepted { background: #dbeafe; color: #1e40af; }
-        .badge-in_progress { background: #e0e7ff; color: #3730a3; }
-        .badge-completed { background: #d1fae5; color: #065f46; }
-        .badge-cancelled, .badge-rejected { background: #fee2e2; color: #991b1b; }
-        table { width: 100%; border-collapse: collapse; }
-        td, th { text-align: left; padding: 8px; border-bottom: 1px solid #eee; font-size: 14px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-        .muted { color: #6b7280; font-size: 13px; }
-        .actions form { display: inline; }
-        .actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-    </style>
-</head>
-<body>
-<header>
-    <div class="nav-left">
-        <span class="brand">🔧 WorkerHire</span>
-        <a href="{% url 'categories:list' %}">Browse Services</a>
-        {% if user.is_authenticated %}
-            <a href="{% url 'workers:search' %}">Find a Worker</a>
-            <a href="{% url 'bookings:mine' %}">My Bookings</a>
-        {% endif %}
-    </div>
-    <div>
-        {% if user.is_authenticated %}
-            <span>Hi, {{ user.username }} ({{ user.role }})</span>
-            <a href="{% url 'accounts:logout' %}">Logout</a>
-        {% else %}
-            <a href="{% url 'accounts:login' %}">Login</a>
-            <a href="{% url 'accounts:register_customer' %}">Sign up as Customer</a>
-            <a href="{% url 'accounts:register_worker' %}">Sign up as Worker</a>
-        {% endif %}
-    </div>
-</header>
-<main>
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}<li>{{ message }}</li>{% endfor %}
-    </ul>
-    {% endif %}
-    {% block content %}{% endblock %}
-</main>
     <title>{% block title %}YOYO - Home Services{% endblock %}</title>
 </head>
 <body>
@@ -87,5 +24,3 @@
         {% endblock %}
     </main>
 
-</body>
-</html>
