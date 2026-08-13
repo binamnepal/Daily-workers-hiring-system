@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Pay for Booking{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>Pay for: {{ booking.category.name }}</h2>
+    <p>Amount due: {{ booking.final_price|default:booking.estimated_price }}</p>
+    <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <p><label>{{ field.label }}</label>{{ field }}</p>
+        {% endfor %}
+        <button type="submit">Continue</button>
+    </form>
+</div>
+{% endblock %}

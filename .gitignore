@@ -12,9 +12,6 @@ env/
 .env
 .env.*
 
-# Django
-db.sqlite3
-db.sqlite3-journal
 
 # User uploaded files
 media/

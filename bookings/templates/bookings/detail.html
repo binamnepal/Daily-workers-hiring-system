@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Booking Detail{% endblock %}
+{% block content %}
+<div class="card">
+    <h2>{{ booking.category.name }} <span class="badge badge-{{ booking.status }}">{{ booking.get_status_display }}</span></h2>
+    <p><strong>Customer:</strong> {{ booking.customer.username }}</p>
+    <p><strong>Worker:</strong> {% if booking.worker %}{{ booking.worker.user.username }}{% else %}Not assigned{% endif %}</p>
+    <p><strong>Address:</strong> {{ booking.address }}, {{ booking.city }}</p>
+    <p><strong>Scheduled:</strong> {{ booking.scheduled_start }}</p>
+    <p><strong>Notes:</strong> {{ booking.notes|default:"—" }}</p>
+    <p><strong>Estimated price:</strong> {{ booking.estimated_price }}
+       {% if booking.final_price %} | <strong>Final price:</strong> {{ booking.final_price }}{% endif %}</p>
+
+    <div class="actions">
+        {% if user == booking.customer and booking.status == "pending" and not booking.worker %}
+        <form method="post" action="{% url 'bookings:assign' booking.id %}">
+            {% csrf_token %}
+            <input type="hidden" name="worker_id" value="">
+            <p class="muted">Assign via a worker's profile page ("Hire" button), or paste a worker ID below.</p>
+        </form>
+        {% endif %}
+
+        {% if user.worker_profile == booking.worker %}
+            {% if booking.status == "pending" %}
+            <form method="post" action="{% url 'bookings:accept' booking.id %}">{% csrf_token %}<button>Accept</button></form>
+            <form method="post" action="{% url 'bookings:reject' booking.id %}">{% csrf_token %}<button class="danger">Reject</button></form>
+            {% elif booking.status == "accepted" %}
+            <form method="post" action="{% url 'bookings:start' booking.id %}">{% csrf_token %}<button>Start Work</button></form>
+            {% elif booking.status == "in_progress" %}
+            <form method="post" action="{% url 'bookings:complete' booking.id %}">
+                {% csrf_token %}
+                {{ complete_form.final_price }}
+                <button>Mark Completed</button>
+            </form>
+            {% endif %}
+        {% endif %}
+
+        {% if booking.status in "pending,accepted,in_progress" and user == booking.customer or user.worker_profile == booking.worker %}
+        <form method="post" action="{% url 'bookings:cancel' booking.id %}">
+            {% csrf_token %}
+            <input type="text" name="reason" placeholder="Reason (optional)">
+            <button class="danger">Cancel Booking</button>
+        </form>
+        {% endif %}
+
+        {% if booking.status == "completed" and user == booking.customer %}
+        <a class="btn" href="{% url 'payments:pay' booking.id %}">Pay Now</a>
+        <a class="btn secondary" href="{% url 'reviews:create' booking.id %}">Leave a Review</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card">
+    <h3>Status History</h3>
+    <table>
+        <tr><th>From</th><th>To</th><th>When</th><th>Note</th></tr>
+        {% for log in booking.status_logs.all %}
+        <tr><td>{{ log.from_status|default:"—" }}</td><td>{{ log.to_status }}</td><td>{{ log.changed_at }}</td><td>{{ log.note }}</td></tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
