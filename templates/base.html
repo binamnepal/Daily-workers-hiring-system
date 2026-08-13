@@ -1,13 +1,43 @@
 {% load static %}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 38a8c9f563335d1275bdb4442475e9d22be50e85
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+<<<<<<< HEAD
     <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
     <meta charset="UTF-8">
     <title>{% block title %}YOYO - Home Services{% endblock %}</title>
+=======
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Handy</title>
+
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- Handy Footer CSS -->
+    <link rel="stylesheet"
+          href="{% static 'css/footer.css' %}">
+
+>>>>>>> 38a8c9f563335d1275bdb4442475e9d22be50e85
 </head>
+
+
 <body>
 
+<<<<<<< HEAD
     <nav class="navbar">
         <a href="/" class="logo">YOYO</a>
         <ul class="nav-links">
@@ -23,6 +53,18 @@
         {% block content %}
         {% endblock %}
     </main>
+=======
+
+    {% block content %}
+
+    {% endblock %}
+
+
+    <!-- Footer -->
+    {% include 'UI/footer.html' %}
+
+>>>>>>> 38a8c9f563335d1275bdb4442475e9d22be50e85
 
 </body>
+
 </html>
