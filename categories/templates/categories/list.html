@@ -1,6 +1,9 @@
 {% extends "base.html" %}
-{% load%}
+{% load static %}
 {% block title %}Services{% endblock %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/catogories.css' %}">
+{% endblock %}
 {% block content %}
 <h2>Browse Services</h2>
 <div class="grid">

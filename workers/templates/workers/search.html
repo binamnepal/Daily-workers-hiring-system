@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/search.css' %}">
+{% endblock %}
 {% block title %}Find a Worker{% endblock %}
 {% block content %}
 <div class="card">
