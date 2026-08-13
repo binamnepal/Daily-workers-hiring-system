@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load static %}
+{% block css %}
+  <link rel="stylesheet" href="{% static 'css/worker_dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="dash-header">
+    <div>
+        <h1>Worker Dashboard</h1>
+        <p>Welcome back, {{ request.user.username }}</p>
+    </div>
+    <div class="actions">
+        <a href="{% url 'accounts:update_location' %}" class="btn btn-outline">Update Location</a>
+        <form method="post" action="{% url 'accounts:logout' %}" style="margin:0;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    </div>
+</div>
+
+<div class="stats">
+    <div class="stat-card">
+        <span class="stat-number">{{ total_bookings }}</span>
+        <span class="stat-label">Total Jobs</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ pending_bookings }}</span>
+        <span class="stat-label">Pending</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ completed_bookings }}</span>
+        <span class="stat-label">Completed</span>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number">{{ cancelled_bookings }}</span>
+        <span class="stat-label">Cancelled</span>
+    </div>
+</div>
+
+<h2>Recent Jobs</h2>
+{% if recent_bookings %}
+<table>
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in recent_bookings %}
+        <tr>
+            <td>{{ booking.customer.username }}</td>
+            <td>{{ booking.category }}</td>
+            <td>
+                <span class="badge badge-{{ booking.status }}">
+                    {{ booking.get_status_display }}
+                </span>
+            </td>
+            <td>{{ booking.created_at|date:"M d, Y" }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty-state">
+    <p>No jobs assigned yet.</p>
+</div>
+{% endif %}
+{% endblock %}

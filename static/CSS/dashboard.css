@@ -1,152 +1,285 @@
 /* ==========================================================================
-   Dashboard Styles
+   YOYO — Dashboard ("Dispatch Board")
+   Shares brand tokens with the landing page for continuity
    ========================================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap');
+
 :root {
-    --primary: #4f46e5;
-    --primary-dark: #4338ca;
-    --primary-light: #eef2ff;
-    --secondary: #64748b;
-    --success: #16a34a;
-    --warning: #d97706;
-    --danger: #dc2626;
-    --bg: #f8fafc;
-    --card-bg: #ffffff;
-    --border: #e2e8f0;
-    --text: #1e293b;
-    --text-muted: #64748b;
-    --radius: 12px;
-    --shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-    --shadow-hover: 0 4px 12px rgba(15, 23, 42, 0.08);
+    --yoyo-ink: #132436;
+    --yoyo-ink-light: #1e3a52;
+    --yoyo-paper: #f6f4ef;
+    --yoyo-panel: #ffffff;
+    --yoyo-amber: #f5a623;
+    --yoyo-amber-dark: #d68c0f;
+    --yoyo-success: #1f8a4c;
+    --yoyo-success-bg: #e6f4ea;
+    --yoyo-danger: #c0392b;
+    --yoyo-danger-bg: #fbe9e7;
+    --yoyo-border: #dfd9cb;
+    --yoyo-text: #1c2b38;
+    --yoyo-text-muted: #5b6b78;
+    --yoyo-radius: 10px;
+    --yoyo-shadow: 0 2px 8px rgba(19, 36, 54, 0.07);
+    --yoyo-shadow-lg: 0 10px 28px rgba(19, 36, 54, 0.14);
 }
 
 body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--yoyo-paper);
+    color: var(--yoyo-text);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* ---------- Cards ---------- */
+h2, h3 {
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+
+*:focus-visible {
+    outline: 3px solid var(--yoyo-amber);
+    outline-offset: 2px;
+}
+
+#content,
+main {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 36px 24px 60px;
+}
+
+/* ==========================================================================
+   Base card
+   ========================================================================== */
 
 .card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 24px 28px;
-    margin-bottom: 24px;
-}
-
-.card h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 6px;
-    letter-spacing: -0.02em;
+    background: var(--yoyo-panel);
+    border: 1px solid var(--yoyo-border);
+    border-radius: var(--yoyo-radius);
+    box-shadow: var(--yoyo-shadow);
+    padding: 26px 28px;
+    margin-bottom: 22px;
 }
 
 .card h3 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    margin: 0 0 16px;
-    color: var(--text);
+    font-size: 1rem;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
 }
 
-.muted {
-    color: var(--text-muted);
-    font-size: 0.925rem;
-    margin: 0 0 20px;
+.card h3::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--yoyo-amber);
+    flex-shrink: 0;
 }
 
-/* ---------- Action Buttons ---------- */
+/* ==========================================================================
+   Welcome header — "ID strip"
+   ========================================================================== */
+
+.card:first-of-type {
+    position: relative;
+    background:
+        linear-gradient(155deg, var(--yoyo-ink) 0%, var(--yoyo-ink-light) 100%);
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(155deg, var(--yoyo-ink) 0%, var(--yoyo-ink-light) 100%);
+    background-size: 34px 34px, 34px 34px, 100% 100%;
+    padding: 30px 32px 28px;
+    border: none;
+    overflow: hidden;
+}
+
+.card:first-of-type::before,
+.card:first-of-type::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--yoyo-amber);
+    opacity: 0.85;
+}
+
+.card:first-of-type::before {
+    top: 16px;
+    left: 16px;
+    border-right: none;
+    border-bottom: none;
+}
+
+.card:first-of-type::after {
+    bottom: 16px;
+    right: 16px;
+    border-left: none;
+    border-top: none;
+}
+
+.card:first-of-type h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+}
+
+.card:first-of-type .muted {
+    position: relative;
+    z-index: 1;
+    color: rgba(246, 244, 239, 0.72);
+    font-size: 0.88rem;
+    margin: 8px 0 24px;
+    font-family: "JetBrains Mono", monospace;
+    letter-spacing: 0.01em;
+}
+
+.card:first-of-type .muted::before {
+    content: "// ";
+    color: var(--yoyo-amber);
+}
+
+/* ==========================================================================
+   Actions — toolbelt chips
+   ========================================================================== */
 
 .actions {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
 }
 
 .btn {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     padding: 10px 18px;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
     font-weight: 600;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
     text-decoration: none;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    white-space: nowrap;
+    border: 1.5px solid transparent;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
 }
 
-.btn:not(.secondary) {
-    background: var(--primary);
-    color: #fff;
+/* Primary chips on dark header */
+.card:first-of-type .btn:not(.secondary) {
+    background: var(--yoyo-amber);
+    color: var(--yoyo-ink);
 }
 
-.btn:not(.secondary):hover {
-    background: var(--primary-dark);
-    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
-    transform: translateY(-1px);
+.card:first-of-type .btn:not(.secondary):hover {
+    background: var(--yoyo-amber-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(245, 166, 35, 0.35);
 }
 
-.btn.secondary {
-    background: var(--primary-light);
-    color: var(--primary-dark);
-    border: 1px solid transparent;
+.card:first-of-type .btn.secondary {
+    background: transparent;
+    color: #f6f4ef;
+    border-color: rgba(246, 244, 239, 0.35);
 }
 
-.btn.secondary:hover {
-    background: #e0e7ff;
-    transform: translateY(-1px);
+.card:first-of-type .btn.secondary:hover {
+    border-color: var(--yoyo-amber);
+    color: var(--yoyo-amber);
+    transform: translateY(-2px);
 }
 
-/* ---------- Stats Grid ---------- */
+/* Chips on light cards (Quick Actions) */
+.card:not(:first-of-type) .btn:not(.secondary) {
+    background: var(--yoyo-ink);
+    color: #ffffff;
+}
+
+.card:not(:first-of-type) .btn:not(.secondary):hover {
+    background: var(--yoyo-ink-light);
+    transform: translateY(-2px);
+}
+
+.card:not(:first-of-type) .btn.secondary {
+    background: var(--yoyo-paper);
+    color: var(--yoyo-text);
+    border-color: var(--yoyo-border);
+}
+
+.card:not(:first-of-type) .btn.secondary:hover {
+    border-color: var(--yoyo-amber);
+    color: var(--yoyo-ink);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Stats — status gauges
+   ========================================================================== */
 
 .stats {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 18px;
-    margin-bottom: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
 }
 
 .stat-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 20px 22px;
-    text-align: left;
+    background: var(--yoyo-panel);
+    border: 1px solid var(--yoyo-border);
+    border-radius: var(--yoyo-radius);
+    box-shadow: var(--yoyo-shadow);
+    padding: 20px 20px 22px;
+    position: relative;
+    border-top: 4px solid var(--yoyo-text-muted);
     transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
 
 .stat-card:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-2px);
+    box-shadow: var(--yoyo-shadow-lg);
+    transform: translateY(-3px);
 }
 
 .stat-card h3 {
-    font-size: 0.85rem;
+    font-size: 0.72rem;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--text-muted);
-    margin: 0 0 8px;
+    letter-spacing: 0.06em;
+    color: var(--yoyo-text-muted);
+    margin: 0 0 10px;
+}
+
+.stat-card h3::before {
+    display: none;
 }
 
 .stat-card p {
-    font-size: 2rem;
-    font-weight: 700;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 2.1rem;
+    font-weight: 500;
     margin: 0;
-    color: var(--text);
+    color: var(--yoyo-ink);
+    line-height: 1;
 }
 
-/* Color-code stats by position */
-.stat-card:nth-child(1) p { color: var(--primary); }
-.stat-card:nth-child(2) p { color: var(--warning); }
-.stat-card:nth-child(3) p { color: var(--success); }
-.stat-card:nth-child(4) p { color: var(--danger); }
+/* Status color coding by position: Total / Pending / Completed / Cancelled */
+.stat-card:nth-child(1) { border-top-color: var(--yoyo-ink); }
+.stat-card:nth-child(2) { border-top-color: var(--yoyo-amber); }
+.stat-card:nth-child(3) { border-top-color: var(--yoyo-success); }
+.stat-card:nth-child(4) { border-top-color: var(--yoyo-danger); }
 
-/* ---------- Recent Activity List ---------- */
+.stat-card:nth-child(2) p { color: var(--yoyo-amber-dark); }
+.stat-card:nth-child(3) p { color: var(--yoyo-success); }
+.stat-card:nth-child(4) p { color: var(--yoyo-danger); }
+
+/* ==========================================================================
+   Recent Activity — ticket log
+   ========================================================================== */
 
 .card ul {
     list-style: none;
@@ -156,40 +289,68 @@ body {
 
 .card ul li {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.925rem;
-    color: var(--text);
+    align-items: baseline;
+    gap: 12px;
+    padding: 13px 0;
+    border-bottom: 1px dashed var(--yoyo-border);
+    font-size: 0.9rem;
+    color: var(--yoyo-text);
 }
 
 .card ul li:last-child {
     border-bottom: none;
 }
 
-.card ul li:only-child {
-    color: var(--text-muted);
-    text-align: center;
-    padding: 24px 0;
+.card ul li::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--yoyo-amber);
+    flex-shrink: 0;
 }
 
-/* ---------- Responsive ---------- */
+.card ul li:only-child {
+    color: var(--yoyo-text-muted);
+    text-align: center;
+    justify-content: center;
+    padding: 32px 0;
+    font-style: normal;
+}
+
+.card ul li:only-child::before {
+    display: none;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
 
 @media (max-width: 640px) {
+    #content, main {
+        padding: 24px 16px 48px;
+    }
+
     .card {
-        padding: 18px 20px;
+        padding: 20px 18px;
     }
 
     .actions {
         flex-direction: column;
+        align-items: stretch;
     }
 
     .btn {
-        width: 100%;
+        justify-content: center;
     }
 
     .stats {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}   

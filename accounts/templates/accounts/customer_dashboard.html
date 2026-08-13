@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<div class="card">
+<div class="card welcome-card">
     <h2>Welcome, {{ user.username }}</h2>
 
     <p class="muted">
@@ -52,22 +52,22 @@
 
 <div class="stats">
 
-    <div class="stat-card">
+    <div class="stat-card stat-total">
         <h3>Total Bookings</h3>
         <p>{{ total_bookings|default:"0" }}</p>
     </div>
 
-    <div class="stat-card">
+    <div class="stat-card stat-pending">
         <h3>Pending</h3>
         <p>{{ pending_bookings|default:"0" }}</p>
     </div>
 
-    <div class="stat-card">
+    <div class="stat-card stat-completed">
         <h3>Completed</h3>
         <p>{{ completed_bookings|default:"0" }}</p>
     </div>
 
-    <div class="stat-card">
+    <div class="stat-card stat-cancelled">
         <h3>Cancelled</h3>
         <p>{{ cancelled_bookings|default:"0" }}</p>
     </div>
@@ -100,23 +100,21 @@
 
     <h3>Recent Activity</h3>
 
-    <ul>
+    <ul class="activity-log">
 
         {% if recent_bookings %}
 
             {% for booking in recent_bookings %}
             <li>
-                {{ booking.category }}
-                -
-                {{ booking.status }}
-                -
-                {{ booking.created_at|date:"M d, Y" }}
+                <span class="activity-category">{{ booking.category }}</span>
+                <span class="activity-status status-{{ booking.status }}">{{ booking.get_status_display|default:booking.status }}</span>
+                <span class="activity-date">{{ booking.created_at|date:"M d, Y" }}</span>
             </li>
             {% endfor %}
 
         {% else %}
 
-            <li>No recent activity.</li>
+            <li class="empty-row">No recent activity.</li>
 
         {% endif %}
 

@@ -43,10 +43,16 @@
 
         </form>
 
-        <p class="login-footer">
-            Don't have an account?
-            <a href="register/customer/">Create an account</a>
-        </p>
+      <p class="login-footer">
+    Don't have an account?
+    <a href="{% url 'accounts:register_customer' %}">
+        Register as Customer
+    </a>
+    |
+    <a href="{% url 'accounts:register_worker' %}">
+        Register as Worker
+    </a>
+</p>
 
     </div>
 

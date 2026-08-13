@@ -14,3 +14,6 @@ def category_detail(request, slug):
 
 def about(request):
     return render(request, "UI/About.html")
+
+def contact(request):
+    return render(request, "UI/Contact_us.html")
