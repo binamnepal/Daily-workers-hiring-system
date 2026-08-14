@@ -21,48 +21,45 @@
 
 <body>
 
-    <nav class="navbar">
+<nav class="navbar">
 
-        <a href="{% url 'categories:list' %}" class="logo">
-            YOYO
+    <a href="{% url 'categories:list' %}" class="logo">
+        YOYO
+    </a>
+
+    <ul class="nav-links">
+        <li><a href="{% url 'categories:list' %}">Home</a></li>
+        <li><a href="{% url 'categories:about' %}">About</a></li>
+        <li><a href="{% url 'categories:contact' %}">Contact</a></li>
+    </ul>
+
+    <form
+    class="search-form"
+    method="get"
+    action="{% url 'workers:search' %}"
+>
+    <input
+        type="text"
+        name="q"
+        placeholder="Search services..."
+    >
+
+    <button type="submit">
+        Search
+    </button>
+</form>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'accounts:dashboard' %}">
+            {{ user.username }}
         </a>
+    {% else %}
+        <a href="{% url 'accounts:login' %}">
+            Login
+        </a>
+    {% endif %}
 
-        <ul class="nav-links">
-
-            <li>
-                <a href="{% url 'categories:list' %}">
-                    Home
-                </a>
-            </li>
-
-            <li>
-                <a href="{% url 'categories:about' %}">
-                    About
-                </a>
-            </li>
-
-            <li>
-            <a href="{% url 'categories:contact' %}">
-                Contact
-            </a>
-            </li>
-
-        </ul>
-  {% if user.is_authenticated %}
-
-    <a href="{% url 'accounts:dashboard' %}">
-        {{ user.username }}
-    </a>
-
-{% else %}
-
-    <a href="{% url 'accounts:login' %}">
-        Login
-    </a>
-
-{% endif %}
-
-    </nav>
+</nav>
 
     <main>
 

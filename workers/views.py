@@ -62,3 +62,21 @@ def add_availability(request):
             else:
                 messages.success(request, "Availability slot added.")
     return redirect("workers:my_profile")
+def search(request):
+    query = request.GET.get("q", "")
+
+    workers = Worker.objects.all()
+
+    if query:
+        workers = workers.filter(
+            user__username__icontains=query
+        )
+
+    return render(
+        request,
+        "workers/search.html",
+        {
+            "workers": workers,
+            "query": query,
+        },
+    )
