@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-#jeincd)yl5!v(v967o$-@!=^-m%e18-bt)cu6))b7m7zvpxmv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'testserver']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'testserver', "daily-workers-hiring-system-23th96lam-binam-nepals-projects.vercel.app"]
 
 
 # Application definition
@@ -143,9 +143,3 @@ MAILERS = {
         'BACKEND': 'django.core.mail.backends.console.EmailBackend',
     },
 }
-ALLOWED_HOSTS = [
-    "127.0.0.1",
-    "localhost",
-    "daily-workers-hiring-system.vercel.app",
-    "daily-workers-hiring-system-23th96lam-binam-nepals-projects.vercel.app",
-]
