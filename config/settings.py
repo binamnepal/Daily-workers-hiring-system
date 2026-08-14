@@ -144,7 +144,8 @@ MAILERS = {
     },
 }
 ALLOWED_HOSTS = [
-    "daily-workers-hiring-system.vercel.app",
     "127.0.0.1",
     "localhost",
+    "daily-workers-hiring-system.vercel.app",
+    "daily-workers-hiring-system-23th96lam-binam-nepals-projects.vercel.app",
 ]
